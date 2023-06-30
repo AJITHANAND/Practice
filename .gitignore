@@ -41,3 +41,7 @@ env.bak/
 # Miscellaneous
 *.swp
 .DS_Store
+
+
+#testcase
+testcase.txt
