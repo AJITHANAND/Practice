@@ -38,3 +38,13 @@ where city REGEXP '^[aeiouAEIOU].*[AEIOUaeiou]$';
 select distinct city 
 from station
 where city regexp '^[^aeiouAEIOU]';
+
+
+
+-- https://www.hackerrank.com/challenges/weather-observation-station-10
+-- Query the list of CITY names from STATION that do not end with vowels. Your result cannot contain duplicates.
+
+
+select distinct city 
+from station
+where city regexp '[^aeiouAEIOU]$';
