@@ -1,49 +1,46 @@
-#include<bits/stdc++.h>
-using namespace std;
+#include <iostream>
+#include <vector>
+#include <unordered_set>
 
-int largestSubarray(int input1,int input2[]){
-    unordered_map<int, int> mp;
-    int sum = 0; 
-    int max_len = 0; 
-    int end_idx = -1;       
-    for (int i = 0; i < input1; i++) {
-
-        sum += (input2[i] =input2[i] == 0) ? -1 : 1;
-        if (sum == 0) {
-            max_len = i + 1;
-            end_idx = i;
-        }
-        if (mp.find(sum) != mp.end()) {
-            if (max_len < i - mp[sum]) {
-                max_len = i - mp[sum];
-                end_idx = i;
+class Solution {
+public:
+    bool isVectorInResult(const std::vector<std::vector<int>>& result, const std::vector<int>& temp) {
+        std::unordered_set<int> tempSet(temp.begin(), temp.end());
+        
+        for (const std::vector<int>& innerVector : result) {
+            if (innerVector.size() != temp.size()) {
+                continue;
+            }
+            
+            bool isEqual = true;
+            for (int num : innerVector) {
+                if (tempSet.find(num) == tempSet.end()) {
+                    isEqual = false;
+                    break;
+                }
+            }
+            
+            if (isEqual) {
+                return true;
             }
         }
-        else 
-        {
-            mp[sum] = i;
-        }
+        
+        return false;
     }
-    return max_len;
+};
+
+int main() {
+    std::vector<std::vector<int>> result = {{0}};
+    std::vector<int> temp = {4, 5, 6};
+
+    Solution solution;
+    bool found = solution.isVectorInResult(result, temp);
+
+    if (found) {
+        std::cout << "Vector found in the result." << std::endl;
+    } else {
+        std::cout << "Vector not found in the result." << std::endl;
+    }
+
+    return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-The average weight of six persons is increased by 2.5 lbs when one of them, whose weight is 50 lbs. is replaced by a new man. What is the weight of the new man?
-
-options :
-65,75,76,60
