@@ -28,34 +28,59 @@ public:
         int remainder = 0;
         ListNode *head = nullptr;
         ListNode *tail = nullptr;
-        while ((first != nullptr && second != nullptr))
-        {
-            int num =  first->val + second->val + remainder;
+        
+        // old 
+
+
+        // while ((first != nullptr && second != nullptr))
+        // {
+        //     int num =  first->val + second->val + remainder;
+        //     remainder = num / 10;
+        //     first = first->next;
+        //     second = second->next;
+        //     if(head == nullptr){
+        //         tail = new ListNode(num%10);
+        //         head = tail;
+        //     }else{
+        //         tail->next = new ListNode(num%10);;
+        //         tail = tail->next;
+        //     }
+        // }
+        // while(first != nullptr){
+        //     int num = first->val + remainder;
+        //     remainder = num / 10;
+        //     first = first->next;
+        //     tail->next = new ListNode(num%10);;
+        //     tail = tail->next;
+        // }
+        // while(second != nullptr){
+        //     int num = second->val + remainder;
+        //     remainder = num / 10;
+        //     second = second->next;
+        //     tail->next = new ListNode(num%10);;
+        //     tail = tail->next;
+        // }
+
+
+        while(first != nullptr || second != nullptr){
+            int num = (first? first->val:0) + (second? second->val:0) + remainder;
             remainder = num / 10;
-            first = first->next;
-            second = second->next;
-            if(head == nullptr){
-                tail = new ListNode(num%10);
-                head = tail;
-            }else{
-                tail->next = new ListNode(num%10);;
-                tail = tail->next;
+            if (first != nullptr){
+                first = first->next;
             }
+            if (second != nullptr){
+                second = second->next;
+            }
+            if(head != nullptr){
+                tail->next = new ListNode(num%10);
+                tail = tail->next;
+                continue;
+            }
+            tail = new ListNode(num%10);
+            head = tail;
         }
-        while(first != nullptr){
-            int num = first->val + remainder;
-            remainder = num / 10;
-            first = first->next;
-            tail->next = new ListNode(num%10);;
-            tail = tail->next;
-        }
-        while(second != nullptr){
-            int num = second->val + remainder;
-            remainder = num / 10;
-            second = second->next;
-            tail->next = new ListNode(num%10);;
-            tail = tail->next;
-        }
+
+
         if (remainder != 0){
             tail -> next = new ListNode(remainder);
             tail = tail -> next;
