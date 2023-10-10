@@ -11,61 +11,58 @@ struct ListNode
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 
-class Solution {
+class Solution
+{
 public:
-    ListNode* mergeTwoLists(ListNode* first, ListNode* second) {
+    ListNode *addTwoNumbers(ListNode *first, ListNode *second)
+    {
 
-        if(first ==nullptr){
+        if (first == nullptr)
+        {
             return second;
         }
-        if (second == nullptr){
+        if (second == nullptr)
+        {
             return first;
         }
-
+        int remainder = 0;
         ListNode *head = nullptr;
-        ListNode *list = nullptr;
-        while((first != nullptr && second!=nullptr )){
-            ListNode *newNode;
-            if (first -> val < second -> val){
-                newNode = new ListNode(first->val);
-                first = first -> next;
+        ListNode *tail = nullptr;
+        while ((first != nullptr && second != nullptr))
+        {
+            int num =  first->val + second->val + remainder;
+            remainder = num / 10;
+            first = first->next;
+            second = second->next;
+            if(head == nullptr){
+                tail = new ListNode(num%10);
+                head = tail;
             }else{
-                newNode = new ListNode(second->val);
-                second = second -> next;
-            }
-            if (head == nullptr && list == nullptr){
-                head = newNode;
-                list = head;
-            }else{
-                list->next = newNode;
-                list = list -> next;
+                tail->next = new ListNode(num%10);;
+                tail = tail->next;
             }
         }
         while(first != nullptr){
-            if(head == nullptr){
-                head = new ListNode(first->val);
-                list = head;
-            }else{
-                list->next = new ListNode(first->val);
-                list = list->next;
-            }
-            first = first -> next;
+            int num = first->val + remainder;
+            remainder = num / 10;
+            first = first->next;
+            tail->next = new ListNode(num%10);;
+            tail = tail->next;
         }
         while(second != nullptr){
-            if(head == nullptr){
-                head = new ListNode(second->val);
-                list = head;
-            }else{
-                list->next = new ListNode(second->val);
-                list = list->next;
-            }
-            second = second -> next;
+            int num = second->val + remainder;
+            remainder = num / 10;
+            second = second->next;
+            tail->next = new ListNode(num%10);;
+            tail = tail->next;
+        }
+        if (remainder != 0){
+            tail -> next = new ListNode(remainder);
+            tail = tail -> next;
         }
         return head;
     }
 };
-
-
 
 int main()
 {
@@ -73,36 +70,42 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
+    ListNode *first = new ListNode(9);
+    first -> next = new ListNode(9);
+    first -> next -> next = new ListNode(9);
+    first -> next -> next -> next = new ListNode(9);
+    first -> next -> next -> next -> next = new ListNode(9);
+    first -> next -> next -> next -> next -> next = new ListNode(9);
+    first -> next -> next -> next -> next -> next -> next = new ListNode(9);
 
-    ListNode *first = new ListNode(2);
+    ListNode *second = new ListNode(9);
+    second -> next = new ListNode(9);
+    second -> next -> next = new ListNode(9);
+    second -> next -> next -> next = new ListNode(9);
 
-
-    ListNode *second = new ListNode(1);
-
-
-    cout<<"First list: ";
+    cout << "First list: ";
     ListNode *temp = first;
-    while(temp != NULL){
-        cout<<temp->val<<" ";
+    while (temp != NULL)
+    {
+        cout << temp->val << " ";
         temp = temp->next;
     }
-    cout<<endl;
+    cout << endl;
 
-
-    cout<<"Second list: ";
+    cout << "Second list: ";
     temp = second;
-    while(temp != NULL){
-        cout<<temp->val<<" ";
+    while (temp != NULL)
+    {
+        cout << temp->val << " ";
         temp = temp->next;
     }
-    cout<<endl;
-
-
+    cout << endl;
 
     Solution obj;
-    ListNode *result = obj.mergeTwoLists(first, second);
-    while(result != NULL){
-        cout<<result->val<<" ";
+    ListNode *result = obj.addTwoNumbers(first, second);
+    while (result != NULL)
+    {
+        cout << result->val << " ";
         result = result->next;
     }
 
