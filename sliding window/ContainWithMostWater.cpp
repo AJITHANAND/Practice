@@ -21,7 +21,7 @@ int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     
-    vector<int> height = {1,8,6,2,5,4,8,3,7};
+    vector<int> height = {1,8,6,15,2,5,4,15,8,3};
     Solution sol;
     cout <<sol.maxArea(height) << endl;    
   

@@ -9,7 +9,7 @@ public:
             return false;
         }
         int third = INT_MIN;
-        stack<int>st;
+        stack<int>st{};
         for(int i =n-1 ;i>=0;i--){
             if ( nums[i]< third ){
                 return true;
