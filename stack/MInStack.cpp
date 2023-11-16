@@ -4,41 +4,35 @@ using namespace std;
 
 class MinStack {
 private:
-    stack<int>s;
-    map<int,int>minStack;
+    stack<pair<int,int>>s;
+    int curr_min;
 public:
     MinStack() {
-    
+        curr_min = INT_MAX;
     }
     
     void push(int val) {
-        s.push(val);
-        minStack[val]++;
+        curr_min = min(curr_min,val);
+        s.push(pair<int,long int>(val,curr_min));
     }
     
     void pop() {
         if(s.empty())return;
-        int val =  top();
-        if (minStack[val] >1){
-            minStack[val]--;
-        }else{
-            minStack.erase(val);
-        }
         s.pop();
+        curr_min = s.empty() ? INT_MAX : s.top().second;
     }
     
     int top() {
         if(s.empty())return -1;
-        return s.top();
+        return s.top().first;
     }
     
     int getMin() {
         if(s.empty())return -1;
-        for(auto i :minStack){
-            return i.first;
-        }
+        return s.top().second;
     }
 };
+
 
 /**
  * Your MinStack object will be instantiated and called as such:
@@ -54,8 +48,8 @@ int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
   
-    vector<string >args{"MinStack","push","push","push","getMin","pop","top","getMin"};
-    vector<vector<int>>vals{{},{-2},{0},{-3},{},{},{},{},{}};
+    vector<string >args{"MinStack","push","push","push","top","pop","getMin","pop","getMin","pop","push","top","getMin","push","top","getMin","pop","getMin"};
+    vector<vector<int>>vals{ {},{2147483646},{2147483646},{2147483647},{},{},{},{},{},{},{2147483647},{},{},{-2147483648},{},{},{},{}  };
     MinStack* obj = new MinStack();
     for(int i=1;i<args.size();i++){
         if(args[i]=="push"){
