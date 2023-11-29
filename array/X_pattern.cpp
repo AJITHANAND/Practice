@@ -18,12 +18,10 @@ int main(){
     */
     for(int row =0;row<input.size();row++){
         for(int col =0;col<input.size();col++){
-            if(row == col){  // left diagonal
-                cout<<input[row];
-            }
-            else if (row +col +1==input.size()){  // right diagonal
+            if(row == col || row+col ==input.size()-1){
                 cout<<input[col];
-            }else{
+            }
+            else{
                 cout<< " ";
             }
         }
