@@ -25,6 +25,9 @@ def merge(left:list,right:list)->list:
     return result
 
 
+
+
+
 arr = [5,4,3,2,1]
 print(mergeSort(arr))
 
