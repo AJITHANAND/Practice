@@ -28,6 +28,11 @@ public:
 };
 
 int main(){
+
+	Solution s;
+	cout<<s.minimumRecolors("BBBWW",2)<<endl;
+	cout<<s.minimumRecolors("BBBWW",3)<<endl;
+	cout<<s.minimumRecolors("WWWW",2)<<endl;
 	
 	
 	return 0;
