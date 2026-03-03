@@ -19,10 +19,22 @@ public:
   TreeNode *invertTree(TreeNode *root) {
     if (!root)
       return nullptr;
-    TreeNode *left = invertTree(root->left);
-    TreeNode *right = invertTree(root->right);
-    root->left = right;
-    root->right = left;
+
+    std::queue<TreeNode *> levelQueue;
+    levelQueue.push(root);
+
+    while (!levelQueue.empty()) {
+      TreeNode *node = levelQueue.front();
+      levelQueue.pop();
+      //   std::cout << node->val << " ";
+      std::swap(node->left, node->right);
+      if (node->left) {
+        levelQueue.push(node->left);
+      }
+      if (node->right) {
+        levelQueue.push(node->right);
+      }
+    }
     return root;
   }
 };
