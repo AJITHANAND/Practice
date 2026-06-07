@@ -1,4 +1,5 @@
 #include <iostream>
+#include <queue>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
@@ -30,33 +31,33 @@ private:
 
 public:
   TreeNode *createBinaryTree(vector<vector<int>> &descriptions) {
-    std::unordered_map<int, TreeNode *> store;
-    std::unordered_set<TreeNode *> rootsList;
-    std::unordered_set<TreeNode *> childrenList;
-    for (size_t i = 0; i < descriptions.size(); i++) {
-      int node_value = descriptions[i][0];
-      int child_value = descriptions[i][1];
-      bool isleftChild = descriptions[i][2];
+    unordered_map<int, TreeNode *> store;
+    unordered_set<int> children;
 
-      TreeNode *node = getOrCreateNode(store, node_value);
-      TreeNode *child = getOrCreateNode(store, child_value);
-      if (isleftChild) {
-        node->left = child;
+    for (const vector<int> &description : descriptions) {
+      int parentValue = description[0];
+      int childValue = description[1];
+      bool isLeftChild = description[2];
+
+      TreeNode *parent = getOrCreateNode(store, parentValue);
+      TreeNode *child = getOrCreateNode(store, childValue);
+
+      if (isLeftChild) {
+        parent->left = child;
       } else {
-        node->right = child;
+        parent->right = child;
       }
-      // Update rootsList
-      if (rootsList.find(node) == rootsList.end() &&
-          childrenList.find(node) == childrenList.end()) {
-        rootsList.insert(node);
-      }
-      if (rootsList.find(child) != rootsList.end()) {
-        rootsList.erase(child);
-      }
-      childrenList.insert(child);
+
+      children.insert(childValue);
     }
-    TreeNode *root = *rootsList.begin();
-    return root;
+
+    for (const auto &entry : store) {
+      if (children.find(entry.first) == children.end()) {
+        return entry.second;
+      }
+    }
+
+    return nullptr;
   }
 };
 
@@ -73,16 +74,23 @@ int main() {
   TreeNode *root = s.createBinaryTree(descriptions);
   // check results
   vector<int> expected = {50, 20, 80, 15, 17, 19};
-  // Implement a function to traverse the tree and collect values in order
   vector<int> result;
-  std::function<void(TreeNode *)> inorder = [&](TreeNode *node) {
-    if (!node)
-      return;
-    inorder(node->left);
+
+  queue<TreeNode *> nodes;
+  nodes.push(root);
+  while (!nodes.empty()) {
+    TreeNode *node = nodes.front();
+    nodes.pop();
+
     result.push_back(node->val);
-    inorder(node->right);
-  };
-  inorder(root);
+    if (node->left) {
+      nodes.push(node->left);
+    }
+    if (node->right) {
+      nodes.push(node->right);
+    }
+  }
+
   // Compare result with expected
   if (result == expected) {
     std::cout << "Test Case 1 Passed!" << std::endl;
